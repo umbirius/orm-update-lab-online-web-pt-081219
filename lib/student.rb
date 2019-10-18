@@ -44,43 +44,29 @@ class Student
   end 
   
   
-  def self.create(name:, grade:)
+	def self.create(name:, grade:)
     student = Student.new(name, grade)
     student.save
     student
   end
-  
+
   def self.new_from_db(row)
-    new_student = self.new 
-    new_student.id = row[0]
-    new_student.name = row[1]
-    new_student.grade = row[2]
-    new_student
+    id = row[0]
+    name = row[1]
+    grade = row[2]
+    self.new(id, name, grade)
   end 
-  
-  def self.find_by_name
-    sql = <<-SQL 
-      SELECT * 
-      FROM student 
-      WHERE name = ? 
-      LIMIT 1
-    SQL
-    
-    DB[:conn].execute(sql, name).map do |row|
-      new_from_db(row)
-    end.first
-  end 
-  
-  def update 
-    sql = <<-SQL
-      UPDATE students
-      SET name = ?, grade = ?
-      WHERE id = ?
-    SQL
-    
+
+  def self.find_by_name(name)
+    sql = "SELECT * FROM students WHERE name = ?"
+    DB[:conn].execute(sql, name).map { |row| new_from_db(row) }.first
+  end
+
+  def update
+    sql = "UPDATE students SET name = ?, grade = ? WHERE id = ?"
     DB[:conn].execute(sql, self.name, self.grade, self.id)
-  end 
-      
+  end
+end
       
 end 
 
