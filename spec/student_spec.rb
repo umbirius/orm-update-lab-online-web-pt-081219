@@ -48,7 +48,7 @@ describe "Student" do
     end
   end
 
-  describe "#save" do
+  describe ".save" do
     it 'saves an instance of the Student class to the database and then sets the given students `id` attribute' do
       sarah = Student.new("Sarah", "9th")
       sarah.save
@@ -97,7 +97,7 @@ describe "Student" do
     end
   end
 
-  describe '#update' do
+  describe '.update' do
     it 'updates the record associated with a given instance' do
       josh.save
       josh.name = "Josh Jr."
