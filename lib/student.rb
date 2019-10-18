@@ -70,6 +70,10 @@ class Student
       new_from_db(row)
     end.first
   end 
+  
+  def update 
+    sql = <<-SQL
+      
       
 end 
 
